@@ -1,6 +1,7 @@
 package ru.netology.domain;
 
 public class Movie {
+    private int id;
     private String title;
     private String urlPoster;
     private String genre;
@@ -27,5 +28,13 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

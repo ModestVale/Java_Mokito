@@ -1,21 +1,31 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Movie;
+import ru.netology.repository.MovieRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import  static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 public class MovieManagerTest {
+    @Mock
+    private MovieRepository repository;
+    @InjectMocks
+    private MovieManager managerDefault = new MovieManager(repository);
+    @InjectMocks
+    private MovieManager managerCustom = new MovieManager(repository, 15);
+
     @Test
-    public void moveManagerPositive() {
-        MovieManager manager = new MovieManager();
-        testMoveManager(manager,15,10);
-
-        manager = new MovieManager(15);
-        testMoveManager(manager,15,15);
-
-        manager = new MovieManager(12);
-        testMoveManager(manager,10,10);
+    public void moveManager_getLastMovies() {
+        testMoveManager(managerDefault,15,10);
+        testMoveManager(managerCustom,15,15);
+        testMoveManager(managerCustom,10,10);
     }
 
     private void testMoveManager(MovieManager manager, int testMoviesLength, int expectedMoviesLength)
@@ -26,8 +36,9 @@ public class MovieManagerTest {
             Movie movie = new Movie();
             movie.setTitle("Фильм" + i);
             testMovies[i] = movie;
-            manager.addMovie(movie);
         }
+
+        doReturn(testMovies).when(repository).findAll();
 
         Movie[] expectedMovies = new Movie[expectedMoviesLength];
 
@@ -38,6 +49,13 @@ public class MovieManagerTest {
 
         Movie[] actualMovies = manager.getLastMovies();
         assertArrayEquals(expectedMovies,actualMovies);
+    }
+
+    @Test
+    public void moveManager_addMovie() {
+        var movie = new Movie();
+        managerDefault.addMovie(movie);
+        verify(repository).save(movie);
     }
 
 }
