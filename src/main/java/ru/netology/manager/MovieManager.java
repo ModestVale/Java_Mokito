@@ -1,23 +1,20 @@
 package ru.netology.manager;
 
 import ru.netology.domain.Movie;
+import ru.netology.repository.MovieRepository;
 
 public class MovieManager {
-    private Movie[] movies = new Movie[0];
+
     private int lastMoviesLength;
+    MovieRepository repository;
 
     public void addMovie(Movie movie) {
-        int length = movies.length + 1;
-        Movie[] tmp = new Movie[length];
-        System.arraycopy(movies, 0, tmp, 0, movies.length);
-        int lastIndex = tmp.length - 1;
-        tmp[lastIndex] = movie;
-        movies = tmp;
+        repository.save(movie);
     }
 
     public Movie[] getLastMovies() {
         int tmpLength = lastMoviesLength;
-
+        Movie[] movies = repository.findAll();
         if (movies.length < tmpLength) {
             tmpLength = movies.length;
         }
@@ -34,11 +31,13 @@ public class MovieManager {
         return tmp;
     }
 
-    public MovieManager() {
+    public MovieManager(MovieRepository repository) {
+        this.repository = repository;
         lastMoviesLength = 10;
     }
 
-    public MovieManager(int lastMoviesLength) {
+    public MovieManager(MovieRepository repository, int lastMoviesLength) {
+        this.repository = repository;
         this.lastMoviesLength = lastMoviesLength;
     }
 }
