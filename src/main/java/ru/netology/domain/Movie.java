@@ -5,6 +5,10 @@ public class Movie {
     private String urlPoster;
     private String genre;
 
+    public Movie(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

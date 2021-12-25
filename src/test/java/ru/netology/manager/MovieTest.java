@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MovieTest {
 
     @Test
-    public void MovieTestGetSet()
-    {
-        Movie movie = new Movie();
-        String title = "Фильм";
+    public void MovieTestGetSet() {
+        Movie movie = new Movie("Фильм");
+        String title = "Фильм1";
         String genre = "ужасы";
         String url = "https://localhost/1.jpg";
 
+        assertEquals("Фильм", movie.getTitle());
         movie.setTitle(title);
         movie.setGenre(genre);
         movie.setUrlPoster(url);
