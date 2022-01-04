@@ -24,28 +24,8 @@ public class MovieManagerTest {
     private Movie movie15 = new Movie("Фильм15");
 
     @Test
-    public void moveManagerPositive() {
+    public void shouldMoveManagerGetTenLastMoviesWhenFifteenAdded() {
         MovieManager manager = new MovieManager();
-        fillMoveManager15(manager);
-        testMoveManager(manager, 15, 10);
-
-        manager = new MovieManager(15);
-        fillMoveManager15(manager);
-        testMoveManager(manager, 15, 15);
-
-        manager = new MovieManager(12);
-        fillMoveManager10(manager);
-        testMoveManager(manager, 10, 10);
-    }
-
-    private void testMoveManager(MovieManager manager, int testMoviesLength, int expectedMoviesLength) {
-        Movie[] expectedMovies = getExpectedArray(expectedMoviesLength, 15 - testMoviesLength);
-
-        Movie[] actualMovies = manager.getLastMovies();
-        assertArrayEquals(expectedMovies, actualMovies);
-    }
-
-    private void fillMoveManager15(MovieManager manager) {
         manager.addMovie(movie1);
         manager.addMovie(movie2);
         manager.addMovie(movie3);
@@ -61,9 +41,26 @@ public class MovieManagerTest {
         manager.addMovie(movie13);
         manager.addMovie(movie14);
         manager.addMovie(movie15);
+
+        Movie[] expectedMovies = new Movie[10];
+        expectedMovies[0] = movie15;
+        expectedMovies[1] = movie14;
+        expectedMovies[2] = movie13;
+        expectedMovies[3] = movie12;
+        expectedMovies[4] = movie11;
+        expectedMovies[5] = movie10;
+        expectedMovies[6] = movie9;
+        expectedMovies[7] = movie8;
+        expectedMovies[8] = movie7;
+        expectedMovies[9] = movie6;
+
+        Movie[] actualMovies = manager.getLastMovies();
+        assertArrayEquals(expectedMovies, actualMovies);
     }
 
-    private void fillMoveManager10(MovieManager manager) {
+    @Test
+    public void shouldMoveManagerGetFifteenLastMoviesWhenFifteenAdded() {
+        MovieManager manager = new MovieManager(15);
         manager.addMovie(movie1);
         manager.addMovie(movie2);
         manager.addMovie(movie3);
@@ -74,29 +71,62 @@ public class MovieManagerTest {
         manager.addMovie(movie8);
         manager.addMovie(movie9);
         manager.addMovie(movie10);
+        manager.addMovie(movie11);
+        manager.addMovie(movie12);
+        manager.addMovie(movie13);
+        manager.addMovie(movie14);
+        manager.addMovie(movie15);
+
+        Movie[] expectedMovies = new Movie[15];
+
+        expectedMovies[0] = movie15;
+        expectedMovies[1] = movie14;
+        expectedMovies[2] = movie13;
+        expectedMovies[3] = movie12;
+        expectedMovies[4] = movie11;
+        expectedMovies[5] = movie10;
+        expectedMovies[6] = movie9;
+        expectedMovies[7] = movie8;
+        expectedMovies[8] = movie7;
+        expectedMovies[9] = movie6;
+        expectedMovies[10] = movie5;
+        expectedMovies[11] = movie4;
+        expectedMovies[12] = movie3;
+        expectedMovies[13] = movie2;
+        expectedMovies[14] = movie1;
+
+        Movie[] actualMovies = manager.getLastMovies();
+        assertArrayEquals(expectedMovies, actualMovies);
     }
 
-    private Movie[] getExpectedArray(int length, int offset) {
-        Movie[] expectedTmp = new Movie[15];
-        expectedTmp[0] = movie15;
-        expectedTmp[1] = movie14;
-        expectedTmp[2] = movie13;
-        expectedTmp[3] = movie12;
-        expectedTmp[4] = movie11;
-        expectedTmp[5] = movie10;
-        expectedTmp[6] = movie9;
-        expectedTmp[7] = movie8;
-        expectedTmp[8] = movie7;
-        expectedTmp[9] = movie6;
-        expectedTmp[10] = movie5;
-        expectedTmp[11] = movie4;
-        expectedTmp[12] = movie3;
-        expectedTmp[13] = movie2;
-        expectedTmp[14] = movie1;
+    @Test
+    public void shouldMoveManagerGetTenLastMoviesWhenTenAdded() {
+        MovieManager manager = new MovieManager(10);
 
-        Movie[] output = new Movie[length];
-        System.arraycopy(expectedTmp, offset, output, 0, length);
-        return output;
+        manager.addMovie(movie1);
+        manager.addMovie(movie2);
+        manager.addMovie(movie3);
+        manager.addMovie(movie4);
+        manager.addMovie(movie5);
+        manager.addMovie(movie6);
+        manager.addMovie(movie7);
+        manager.addMovie(movie8);
+        manager.addMovie(movie9);
+        manager.addMovie(movie10);
+
+        Movie[] expectedMovies = new Movie[10];
+        expectedMovies[0] = movie10;
+        expectedMovies[1] = movie9;
+        expectedMovies[2] = movie8;
+        expectedMovies[3] = movie7;
+        expectedMovies[4] = movie6;
+        expectedMovies[5] = movie5;
+        expectedMovies[6] = movie4;
+        expectedMovies[7] = movie3;
+        expectedMovies[8] = movie2;
+        expectedMovies[9] = movie1;
+
+        Movie[] actualMovies = manager.getLastMovies();
+        assertArrayEquals(expectedMovies, actualMovies);
     }
-
 }
